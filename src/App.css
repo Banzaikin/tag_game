@@ -1,0 +1,1220 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.game-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  color: #2d3436;
+  margin-bottom: 10px;
+  font-size: 2.2em;
+  text-align: center;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.control-group label {
+  font-weight: 600;
+  color: #2d3436;
+  font-size: 1.1em;
+}
+
+.size-btn {
+  padding: 10px 20px;
+  border: 2px solid #b2bec3;
+  background: white;
+  color: #2d3436;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.size-btn.active {
+  background: #74b9ff;
+  color: white;
+  border-color: #74b9ff;
+  transform: scale(1.05);
+}
+
+.size-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.size-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 8px 15px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #dfe6e9;
+}
+
+.checkbox-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: #74b9ff;
+}
+
+.action-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 160px;
+}
+
+.btn.new-game {
+  background: #e17055;
+  color: white;
+}
+
+.btn.solve {
+  background: #00b894;
+  color: white;
+}
+
+.btn:disabled {
+  background: #b2bec3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Game Board */
+.board-container {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  background: #2d3436;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.tile {
+  background: linear-gradient(145deg, #74b9ff, #0984e3);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 2px solid white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.tile.empty {
+  background: transparent;
+  border: 2px dashed #636e72;
+  box-shadow: none;
+  cursor: default;
+}
+
+.tile.empty:hover {
+  transform: none;
+}
+
+.tile.editable {
+  cursor: pointer;
+}
+
+/* Messages */
+.warning {
+  background: #ffebee;
+  border: 2px solid #f44336;
+  color: #c62828;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.custom-mode-info {
+  background: #e3f2fd;
+  border: 2px solid #2196f3;
+  color: #1976d2;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.custom-mode-info p {
+  margin: 5px 0;
+  font-weight: 500;
+}
+
+.game-info {
+  margin: 20px 0;
+}
+
+.status-message {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #2d3436;
+  padding: 15px;
+  background: #f1f3f4;
+  border-radius: 10px;
+  margin: 0;
+}
+
+/* Tree Graph */
+.tree-graph {
+  margin-top: 40px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border-left: 5px solid #00b894;
+}
+
+.tree-graph h3 {
+  color: #2d3436;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.graph-stats {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.graph-stats div {
+  background: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  font-weight: bold;
+  color: #2d3436;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.status-solved {
+  color: #00b894 !important;
+  border-color: #00b894 !important;
+}
+
+.status-unsolved {
+  color: #e17055 !important;
+  border-color: #e17055 !important;
+}
+
+.tree-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.tree-level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.level-label {
+  background: #636e72;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.level-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tree-node {
+  background: white;
+  padding: 12px;
+  border: 2px solid #b2bec3;
+  border-radius: 8px;
+  min-width: 50px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tree-node.current {
+  border-color: #fdcb6e;
+  background: #fff9e6;
+  transform: scale(1.1);
+}
+
+.tree-node.solved {
+  border-color: #00b894;
+  background: #e8f5e8;
+}
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.node-heuristic {
+  font-weight: bold;
+  color: #2d3436;
+  font-size: 1.1em;
+}
+
+.more-nodes {
+  background: #dfe6e9;
+  padding: 12px;
+  border-radius: 8px;
+  color: #636e72;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* Solution Info */
+.solution-info {
+  margin-top: 25px;
+  padding: 20px;
+  background: #e8f5e8;
+  border-radius: 12px;
+  border: 2px solid #00b894;
+}
+
+.solution-info h4 {
+  color: #2d3436;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.solution-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.solution-step {
+  background: white;
+  padding: 10px 15px;
+  border: 2px solid #00b894;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #2d3436;
+  transition: all 0.3s ease;
+  font-size: 0.9em;
+}
+
+.solution-step.current {
+  background: #00b894;
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-number {
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 8px;
+}
+
+.step-direction {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #00b894;
+  margin-bottom: 8px;
+}
+
+/* Анимации */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.advanced-node.current {
+  animation: pulse 1s infinite;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .game-container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .controls {
+    padding: 15px;
+  }
+  
+  .control-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .action-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    min-width: 200px;
+  }
+  
+  .tile {
+    font-size: 1em;
+  }
+  
+  .graph-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tree-level {
+    align-items: center;
+  }
+}
+
+/* Стили для продвинутого графа */
+.advanced-graph {
+  margin-top: 40px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border-left: 5px solid #00b894;
+}
+
+.graph-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.search-progress {
+  background: #2d3436;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.graph-stats {
+  display: flex;
+  gap: 15px;
+  font-weight: bold;
+}
+
+.search-animation {
+  margin-bottom: 25px;
+}
+
+.current-search-state {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #74b9ff;
+  text-align: center;
+}
+
+.state-action {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 8px;
+}
+
+.state-heuristic {
+  color: #636e72;
+  font-weight: 600;
+}
+
+/* Узлы графа */
+.advanced-node {
+  background: white;
+  padding: 12px;
+  border: 2px solid #b2bec3;
+  border-radius: 8px;
+  margin: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 120px;
+}
+
+.advanced-node.visited {
+  border-color: #74b9ff;
+  background: #e3f2fd;
+}
+
+.advanced-node.current {
+  border-color: #fdcb6e;
+  background: #fff9e6;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.advanced-node.solution-path {
+  border-color: #00b894;
+  background: #e8f5e8;
+}
+
+.advanced-node.solved {
+  border-color: #00b894;
+  background: #c8e6c9;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.node-depth {
+  color: #636e72;
+}
+
+.node-heuristic {
+  color: #e17055;
+  font-weight: bold;
+}
+
+.node-step {
+  font-size: 0.7em;
+  color: #636e72;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* Мини-доски */
+.mini-board {
+  display: grid;
+  background: #2d3436;
+  border-radius: 4px;
+  padding: 2px;
+  margin: 5px 0;
+}
+
+.mini-tile {
+  background: #74b9ff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  border-radius: 2px;
+  border: 1px solid white;
+  min-width: 18px;
+  min-height: 18px;
+}
+
+.mini-tile.mini-empty {
+  background: transparent;
+  border: 1px dashed #636e72;
+}
+
+.mini-tile.mini-correct {
+  background: #00b894;
+}
+
+/* Стрелки */
+.incoming-arrow {
+  font-size: 0.7em;
+  color: #636e72;
+  margin-top: 3px;
+  padding: 2px 4px;
+  background: #f1f3f4;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px solid #dfe6e9;
+}
+
+/* Детализированный путь решения */
+.solution-path-visualization {
+  margin-top: 30px;
+  padding: 20px;
+  background: #e8f5e8;
+  border-radius: 12px;
+  border: 2px solid #00b894;
+}
+
+.solution-steps-detailed {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 15px 0;
+}
+
+.solution-step-detailed {
+  background: white;
+  padding: 15px;
+  border: 2px solid #00b894;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.step-number {
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 8px;
+}
+
+.step-direction {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #00b894;
+  margin-bottom: 8px;
+}
+
+.step-board {
+  display: flex;
+  justify-content: center;
+}
+
+/* Визуальные связи между узлами */
+.tree-level {
+  position: relative;
+}
+
+.level-connections {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #b2bec3;
+  z-index: 1;
+}
+
+/* Анимации для поиска */
+@keyframes highlight {
+  0% { background-color: #fff9e6; }
+  50% { background-color: #ffeb3b; }
+  100% { background-color: #fff9e6; }
+}
+
+.advanced-node.search-highlight {
+  animation: highlight 1s ease-in-out;
+}
+
+/* Индикаторы статуса поиска */
+.search-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.status-expand {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-visit {
+  background: #fff9e6;
+  color: #f57c00;
+}
+
+.status-solution {
+  background: #e8f5e8;
+  color: #388e3c;
+}
+
+.status-deadend {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+/* Подсветка корректных плиток на основной доске */
+.tile.correct {
+  background: linear-gradient(145deg, #00b894, #00a085);
+  color: white;
+}
+
+/* Улучшенная визуализация дерева */
+.tree-container {
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  background: white;
+}
+
+.level-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  min-height: 140px;
+  align-items: flex-start;
+}
+
+/* Информация о текущем поиске */
+.search-info-panel {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #74b9ff;
+  margin-bottom: 20px;
+}
+
+.search-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.metric {
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.metric-value {
+  font-weight: bold;
+  color: #2d3436;
+  font-size: 1.1em;
+}
+
+.metric-label {
+  font-size: 0.8em;
+  color: #636e72;
+}
+
+/* Адаптивность для графа */
+@media (max-width: 768px) {
+  .graph-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .solution-steps-detailed {
+    flex-direction: column;
+  }
+  
+  .advanced-node {
+    min-width: 100px;
+    padding: 8px;
+  }
+  
+  .mini-board {
+    transform: scale(0.8);
+  }
+  
+  .node-header {
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .tree-container {
+    max-height: 400px;
+  }
+  
+  .level-nodes {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .advanced-graph {
+    padding: 15px;
+  }
+  
+  .graph-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .search-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .mini-tile {
+    min-width: 14px;
+    min-height: 14px;
+    font-size: 6px;
+  }
+}
+
+/* Стили для скроллбара */
+.tree-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tree-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.tree-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.tree-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Эффекты при наведении на узлы графа */
+.advanced-node:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Индикатор текущего шага в пути решения */
+.solution-step-detailed.current {
+  border-color: #fdcb6e;
+  background: #fff9e6;
+  transform: scale(1.05);
+}
+
+/* Визуальное разделение уровней графа */
+.tree-level:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b2bec3, transparent);
+  margin: 15px auto;
+}
+
+/* Стили для отображения эвристики */
+.heuristic-breakdown {
+  font-size: 0.7em;
+  color: #636e72;
+  margin-top: 3px;
+}
+
+.heuristic-distance {
+  color: #e17055;
+}
+
+.heuristic-correct {
+  color: #00b894;
+}
+
+/* Анимация появления новых узлов */
+@keyframes nodeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.advanced-node {
+  animation: nodeAppear 0.3s ease-out;
+}
+
+/* Стили для отображения направления ходов */
+.direction-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #74b9ff;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7em;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для графа состояний */
+.state-graph {
+  margin-top: 40px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border-left: 5px solid #00b894;
+}
+
+.graph-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.search-progress {
+  background: #2d3436;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+/* Узлы состояний */
+.state-node {
+  background: white;
+  padding: 8px;
+  border: 2px solid #b2bec3;
+  border-radius: 6px;
+  margin: 4px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.state-node.visited {
+  border-color: #74b9ff;
+  background: #e3f2fd;
+}
+
+.state-node.current {
+  border-color: #fdcb6e;
+  background: #fff9e6;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: pulse 1s infinite;
+}
+
+.state-node.solution-path {
+  border-color: #00b894;
+  background: #e8f5e8;
+}
+
+.state-node.solved {
+  border-color: #00b894;
+  background: #c8e6c9;
+}
+
+.node-header {
+  margin-bottom: 6px;
+}
+
+.node-info {
+  font-size: 0.65em;
+  font-weight: bold;
+  color: #2d3436;
+  line-height: 1.2;
+}
+
+/* Мини-доски */
+.mini-board {
+  display: grid;
+  background: #2d3436;
+  border-radius: 2px;
+  padding: 1px;
+  margin: 3px 0;
+}
+
+.mini-tile {
+  background: #74b9ff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5px;
+  font-weight: bold;
+  border-radius: 1px;
+  border: 0.5px solid white;
+  min-width: 12px;
+  min-height: 12px;
+}
+
+.mini-tile.mini-empty {
+  background: transparent;
+  border: 0.5px dashed #636e72;
+}
+
+.mini-tile.mini-correct {
+  background: #00b894;
+}
+
+/* Стрелки */
+.incoming-arrow {
+  font-size: 0.5em;
+  color: #636e72;
+  margin-top: 2px;
+  padding: 1px 2px;
+  background: #f1f3f4;
+  border-radius: 2px;
+  border: 1px solid #dfe6e9;
+}
+
+/* Текущий поиск */
+.current-search {
+  margin-top: 15px;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 2px solid #74b9ff;
+  font-size: 0.9em;
+}
+
+.search-details {
+  line-height: 1.4;
+}
+
+.search-details div {
+  margin: 3px 0;
+}
+
+/* Подсветка корректных плиток */
+.tile.correct {
+  background: linear-gradient(145deg, #00b894, #00a085);
+  color: white;
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* Улучшенное дерево с вертикальным скроллом */
+.tree-container {
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+}
+
+.level-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: flex-start;
+  min-height: 90px;
+  align-items: flex-start;
+  padding: 5px 0;
+}
+
+.tree-level {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #e9ecef;
+}
+
+.tree-level:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.level-label {
+  background: #636e72;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+/* Прокрутка для глубоких графов */
+.deep-graph-warning {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.graph-navigation {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.graph-nav-btn {
+  padding: 6px 12px;
+  border: 1px solid #b2bec3;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.graph-nav-btn:hover {
+  background: #f8f9fa;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .graph-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .state-node {
+    min-width: 70px;
+    padding: 6px;
+  }
+  
+  .mini-tile {
+    min-width: 10px;
+    min-height: 10px;
+    font-size: 4px;
+  }
+  
+  .node-info {
+    font-size: 0.6em;
+  }
+  
+  .tree-container {
+    max-height: 500px;
+  }
+  
+  .level-nodes {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .state-graph {
+    padding: 15px;
+  }
+  
+  .graph-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .state-node {
+    min-width: 60px;
+    font-size: 0.7em;
+  }
+}
+
+/* Стили для скроллбара */
+.tree-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tree-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.tree-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.tree-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Компактный режим для глубоких графов */
+.compact .state-node {
+  min-width: 60px;
+  padding: 4px;
+  margin: 2px;
+}
+
+.compact .mini-board {
+  transform: scale(0.8);
+}
+
+.compact .node-info {
+  font-size: 0.6em;
+}
+
+/* .tile.selected {
+  background: #ffeb3b !important;
+  color: #333 !important;
+  border: 3px solid #ff9800;
+  transform: scale(1.1);
+} */
