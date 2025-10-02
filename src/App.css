@@ -1218,3 +1218,52 @@ h1 {
   border: 3px solid #ff9800;
   transform: scale(1.1);
 } */
+
+.heuristic-chart {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.chart-svg {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 15px 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.chart-stats {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.chart-stats p {
+  margin: 5px 0;
+}

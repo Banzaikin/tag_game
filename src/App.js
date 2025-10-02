@@ -174,7 +174,7 @@ const App = () => {
 
     const startTime = Date.now();
     const TIME_LIMIT = 20000; // Увеличиваем время
-    const MAX_NODES = 5000;   // Увеличиваем лимит узлов
+    const MAX_NODES = 10000;   // Увеличиваем лимит узлов
 
     while (queue.length > 0 && !solution) {
       if (Date.now() - startTime > TIME_LIMIT) break;
@@ -423,6 +423,150 @@ const App = () => {
     );
   };
 
+  // Рендер графика зависимости g от h
+  const renderHeuristicChart = () => {
+    if (!graph.solution || graph.nodes.length === 0) return null;
+
+    // Собираем данные для графика из узлов на пути решения
+    const solutionNodes = graph.nodes.filter(node => node.isSolutionPath)
+      .sort((a, b) => a.depth - b.depth);
+    
+    if (solutionNodes.length === 0) return null;
+
+    const dataPoints = solutionNodes.map(node => ({
+      g: node.heuristic.g, // количество неправильных фишек
+      h: node.heuristic.h, // глубина
+      f: node.heuristic.f,
+      depth: node.depth
+    }));
+
+    // Находим максимальные значения для масштабирования
+    const maxG = Math.max(...dataPoints.map(d => d.g));
+    const maxH = Math.max(...dataPoints.map(d => d.h));
+    const maxF = Math.max(...dataPoints.map(d => d.f));
+
+    const chartWidth = 400;
+    const chartHeight = 300;
+    const padding = 40;
+
+    return (
+      <div className="heuristic-chart">
+        <h4>📈 График зависимости g от h</h4>
+        <div className="chart-container">
+          <svg width={chartWidth} height={chartHeight} className="chart-svg">
+            {/* Оси */}
+            <line 
+              x1={padding} y1={chartHeight - padding} 
+              x2={chartWidth - padding} y2={chartHeight - padding} 
+              stroke="#333" strokeWidth="2" 
+            />
+            <line 
+              x1={padding} y1={padding} 
+              x2={padding} y2={chartHeight - padding} 
+              stroke="#333" strokeWidth="2" 
+            />
+            
+            {/* Подписи осей */}
+            <text x={chartWidth / 2} y={chartHeight - 10} textAnchor="middle" fill="#333">
+              h
+            </text>
+            <text x={10} y={chartHeight / 2} textAnchor="middle" fill="#333" transform={`rotate(-90, 10, ${chartHeight / 2})`}>
+              g
+            </text>
+
+            {/* Сетка и метки */}
+            {[0, 1, 2, 3, 4, 5].map(tick => {
+              const x = padding + (tick / 5) * (chartWidth - 2 * padding);
+              const y = chartHeight - padding - (tick / 5) * (chartHeight - 2 * padding);
+              
+              return (
+                <g key={`grid-${tick}`}>
+                  {/* Вертикальные линии сетки */}
+                  <line 
+                    x1={x} y1={padding} 
+                    x2={x} y2={chartHeight - padding} 
+                    stroke="#eee" strokeWidth="1" 
+                  />
+                  {/* Горизонтальные линии сетки */}
+                  <line 
+                    x1={padding} y1={y} 
+                    x2={chartWidth - padding} y2={y} 
+                    stroke="#eee" strokeWidth="1" 
+                  />
+                  {/* Метки на оси X */}
+                  <text x={x} y={chartHeight - padding + 15} textAnchor="middle" fill="#666" fontSize="12">
+                    {Math.round((tick / 5) * maxH)}
+                  </text>
+                  {/* Метки на оси Y */}
+                  <text x={padding - 10} y={y} textAnchor="end" fill="#666" fontSize="12" dy="4">
+                    {Math.round((tick / 5) * maxG)}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* Точки данных */}
+            {dataPoints.map((point, index) => {
+              const x = padding + (point.h / maxH) * (chartWidth - 2 * padding);
+              const y = chartHeight - padding - (point.g / maxG) * (chartHeight - 2 * padding);
+              
+              return (
+                <g key={`point-${index}`}>
+                  <circle 
+                    cx={x} 
+                    cy={y} 
+                    r="4" 
+                    fill="#4CAF50" 
+                    stroke="#2E7D32" 
+                    strokeWidth="1"
+                  />
+                  <text 
+                    x={x} 
+                    y={y - 8} 
+                    textAnchor="middle" 
+                    fill="#333" 
+                    fontSize="10"
+                  >
+                    f={point.f}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* Линия тренда */}
+            {dataPoints.map((point, index) => {
+              if (index === 0) return null;
+              const prevPoint = dataPoints[index - 1];
+              const x1 = padding + (prevPoint.h / maxH) * (chartWidth - 2 * padding);
+              const y1 = chartHeight - padding - (prevPoint.g / maxG) * (chartHeight - 2 * padding);
+              const x2 = padding + (point.h / maxH) * (chartWidth - 2 * padding);
+              const y2 = chartHeight - padding - (point.g / maxG) * (chartHeight - 2 * padding);
+              
+              return (
+                <line 
+                  key={`line-${index}`}
+                  x1={x1} 
+                  y1={y1} 
+                  x2={x2} 
+                  y2={y2} 
+                  stroke="#4CAF50" 
+                  strokeWidth="2" 
+                  strokeDasharray="5,5"
+                />
+              );
+            })}
+          </svg>
+        </div>
+
+        <div className="chart-stats">
+          <p><strong>Начальное состояние:</strong> g={dataPoints[0].g}, h={dataPoints[0].h}, f={dataPoints[0].f}</p>
+          <p><strong>Конечное состояние:</strong> g={dataPoints[dataPoints.length-1].g}, h={dataPoints[dataPoints.length-1].h}, f={dataPoints[dataPoints.length-1].f}</p>
+          <p><strong>Изменение g:</strong> {dataPoints[0].g - dataPoints[dataPoints.length-1].g} фишек</p>
+        </div>
+      </div>
+    );
+  };
+
   // Рендер основной плитки
   const renderTile = (number, index) => {
     const isEmpty = number === 0;
@@ -448,7 +592,7 @@ const App = () => {
     );
   };
 
-  // Рендер графа (БЕЗ ИЗМЕНЕНИЙ)
+  // Рендер графа
   const renderGraphWithNewHeuristic = () => {
     if (graph.nodes.length === 0) return null;
 
@@ -467,7 +611,6 @@ const App = () => {
 
     return (
       <div className="state-graph">
-
         <div className="tree-container">
           {depths.map(depth => (
             <div key={depth} className="tree-level">
@@ -508,7 +651,7 @@ const App = () => {
 
         {graph.solution && (
           <div className="solution-summary">
-            <h4>🎯 Оптимальный путь решения</h4>
+            <h4>Оптимальный путь решения</h4>
             <div className="solution-progress">
               <div className="progress-bar">
                 <div 
@@ -523,6 +666,9 @@ const App = () => {
             </div>
           </div>
         )}
+
+        {/* Добавляем график */}
+        {renderHeuristicChart()}
       </div>
     );
   };
@@ -599,7 +745,7 @@ const App = () => {
                 ? '🎉 Решено!' 
                 : customMode
                   ? '⚙️ Настройте начальную позицию'
-                  : '🎯 Решите головоломку!'
+                  : 'Решите головоломку!'
             }
           </p>
         </div>
